@@ -19,7 +19,14 @@ class SearchBar extends Component {
       this.setState({ query: '' });
       
     };
-    
+  //  onChangeQuery = query => {
+  //   this.setState({
+  //     searchQuery: query,
+  //     currentPage: 1,
+  //     images: [],
+  //     error: null,
+  //   });
+  // }; 
     
     render() {
         return (
@@ -32,8 +39,8 @@ class SearchBar extends Component {
     <input
       className="SearchForm-input"
       type="text"
-      autocomplete="off"
-      autofocus
+      autoComplete="off"
+      autoFocus
                 placeholder="Search images and photos"
                 onChange={this.handleChange}
     />
