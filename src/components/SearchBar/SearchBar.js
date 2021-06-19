@@ -1,7 +1,6 @@
 import React, { Component} from "react";
-//import PropTypes from "prop-types";
 import styles from "./SearchBar.module.css";
-//import className from 'classnames'
+
 
 class SearchBar extends Component {
     state = {
@@ -19,25 +18,17 @@ class SearchBar extends Component {
       this.setState({ query: '' });
       
     };
-  //  onChangeQuery = query => {
-  //   this.setState({
-  //     searchQuery: query,
-  //     currentPage: 1,
-  //     images: [],
-  //     error: null,
-  //   });
-  // }; 
     
     render() {
         return (
  <header className={styles.Searchbar}>
-  <form  onSubmit={this.handleSubmit} className="SearchForm">
-    <button type="submit" className="SearchForm-button">
-      <span className="SearchForm-button-label">Search</span>
+  <form  onSubmit={this.handleSubmit} className={styles.SearchForm}>
+    <button type="submit" className={styles.SearchFormButton}>
+      <span className={styles.SearchFormButtonLabel}>Search</span>
     </button>
 
     <input
-      className="SearchForm-input"
+      className={styles.SearchFormInput}
       type="text"
       autoComplete="off"
       autoFocus

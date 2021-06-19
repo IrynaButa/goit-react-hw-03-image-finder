@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-
+import './App.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import SearchBar from "./components/SearchBar/SearchBar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 
@@ -13,14 +14,6 @@ class App extends Component {
   handleSubmitSearchbar = (query) => {
     this.setState({ query });
   };
-// onChangeQuery = query => {
-//     this.setState({
-//       searchQuery: query,
-//       currentPage: 1,
-//       images: [],
-//       error: null,
-//     });
-//   };
   render() {
     return (
        <>

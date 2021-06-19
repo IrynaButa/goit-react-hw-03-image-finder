@@ -3,26 +3,33 @@ import React, { Component} from "react";
 //import PropTypes from "prop-types";
 import styles from "./ImageGallery.module.css";
 import fetchImages from '../../service/ImgApi';
+import ImageItem from "./ImageItem";
+import Button from "../Button/Button";
+import Modal from "../Modal/Modal";
 
-// import Button from "./components/Button/Button";
-// import Loader from "./components/Loader/Loader";
-// import Modal from "./components/Modal/Modal";
 
 class ImageGallery extends Component {
     state = {
     images: [],
     currentPage: 1,
     searchQuery: '',
-    isLoading: false
+      isLoading: false,
+      showModal: false,
+      largeImageURL: null,
     }
 componentDidUpdate(prevProps, prevState) {
      if (prevProps.query !== this.props.query) {
       this.setState({ currentPage: 1, images: [], error: null }, () =>
         this.fetchImg(),
       );
+  }
+  if (prevState.currentPage !== this.state.currentPage) {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
+      });
     }
   }
-
 
   fetchImg = () => {
     const { currentPage } = this.state;
@@ -47,63 +54,52 @@ componentDidUpdate(prevProps, prevState) {
       .finally(() => this.setState({ isLoading: false }));
   };
 
+
+toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  
+  };
+  handleModalImage = url => {
+    this.toggleModal();
+    this.setState({ largeImageURL: url });
+  };
+
   render() {
-    const { images, isLoading, error } = this.state;
-    const shouldRenderLoadMoreButton = images.length > 0 && !isLoading;
+    const { images, isLoading, error, showModal, largeImageURL, } = this.state;
+    const shouldRenderLoadMoreButton = images.length > 0;
 
     return (
-      <div>
+      <>
         {error && <h1>Sorry...We are doing our best</h1>}
         <ul className={ styles.ImageGallery}>
-          {images.map(({ id, webformatURL }) => (
-            <li key={id} className={styles.ImageGalleryItem}>
-              <img src={webformatURL} alt="" className="ImageGalleryItem-image"/>
-            </li>
+          {images.map(({ id, webformatURL, largeImageURL }) => (
+
+ <ImageItem
+              key={id}
+              webformatURL={webformatURL}
+              onToggleModal={this.handleModalImage}
+              largeImageURL={largeImageURL}
+            />
           ))}
         </ul>
 
-        {isLoading && <h1>Loading...</h1>}
+        {/* {isLoading && <h1>Loading...</h1>} */}
 
         {shouldRenderLoadMoreButton && (
-          <button type="button" onClick={this.fetchImg}>
-            Load more
-          </button>
+           <Button onClick={this.fetchImg} isLoading={isLoading} />
+         
+          
         )}
-      </div>
+        {showModal && (
+          <Modal onClose={this.toggleModal}>
+            <img src={largeImageURL} alt="" />
+          </Modal>
+        )}
+      </>
     );
   }
 }
 
 export default ImageGallery;
-
-// const ImageGallery = ({ contacts, onDeleteContact, id }) => (
-//   <ul className={styles.formContacts}>
-//     {contacts.map((contact) => (
-//       <li key={contact.id}>
-//         <Phone width="30" height="20" />
-//         {contact.name}
-//         {" : "}
-//         {contact.number}
-//         <IconButton
-//           onClick={() => onDeleteContact(contact.id)}
-//           title="delete"
-//           aria-label="Delete tag"
-//         >
-//           <Delete width="20" height="20" />
-//         </IconButton>
-//       </li>
-//     ))}
-//   </ul>
-// );
-
-// Contacts.propTypes = {
-//   onDeleteContact: PropTypes.func.isRequired,
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     })
-//   ),
-// };
-// export default Contacts;
