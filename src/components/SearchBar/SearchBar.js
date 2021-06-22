@@ -32,8 +32,8 @@ class SearchBar extends Component {
       type="text"
       autoComplete="off"
       autoFocus
-                placeholder="Search images and photos"
-                onChange={this.handleChange}
+      placeholder="Search images and photos"
+      onChange={this.handleChange}
     />
   </form>
 </header>

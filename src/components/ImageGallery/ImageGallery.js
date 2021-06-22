@@ -76,7 +76,7 @@ toggleModal = () => {
         <ul className={ styles.ImageGallery}>
           {images.map(({ id, webformatURL, largeImageURL }) => (
 
- <ImageItem
+            <ImageItem
               key={id}
               webformatURL={webformatURL}
               onToggleModal={this.handleModalImage}
